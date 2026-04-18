@@ -55,7 +55,7 @@ The following directories contain large pretrained model weights and datasets th
 | Directory | Contents | Notes |
 |-----------|----------|-------|
 | `molformer/` | IBM MolFormer pretrained weights | SMILES tokenizer + encoder |
-| `prot_t5_xl_uniref50/` | ProtT5-XL-UniRef50 model weights | Default protein language model | https://huggingface.co/Rostlab/prot_t5_xl_uniref50/tree/main
+| `prot_t5_xl_uniref50/` | ProtT5-XL-UniRef50 model weights | Default protein language model https://huggingface.co/Rostlab/prot_t5_xl_uniref50/tree/main | 
 | `vit_model/` | ViT pretrained weights | Used for molecular frame feature extraction |
 | `data/` | DTI dataset files  | Primary dataset |
 
