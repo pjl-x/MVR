@@ -1,90 +1,47 @@
-# MVR: Multi-modal Visual Representation for Drug-Target Interaction Prediction
+# MVR—DTI: A Multimodal Molecular Visual Representation Learning for Drug-Target Interaction Prediction
 
 ## Overview
 
-MVR (Multi-modal Visual Representation) is a deep learning framework for Drug-Target Interaction (DTI) prediction. It integrates multiple modalities to represent molecules and proteins:
-
-- **MolFormer** — SMILES-based molecular tokenization
-- **ViT (Vision Transformer)** — 3D rotating molecular video frames rendered with PyMOL
-- **ProtT5-XL** — Protein language model embeddings
-- **Knowledge Graph embeddings** — Entity-level KG representations for drugs and proteins
-- **BiIntention cross-modal fusion** — Bidirectional cross-attention between drug and protein features
-
-
+MVR (Multi-modal Visual Representation) is a deep learning framework for Drug-Target Interaction (DTI) prediction. It integrates multiple modalities to represent molecules and proteins.
 
 ---
 
-## Repository Structure
 
-```
-MVR/
-├── code/                        # Main experiment (primary dataset)
-│   ├── main.py                  # Entry point: 5-seed training loop
-│   ├── trainer.py               # Training / evaluation logic
-│   ├── models.py                # MVR model architecture
-│   ├── dataloader.py            # DTIDataset
-│   ├── configs.py               # Hyperparameter defaults (YACS)
-│   ├── utils.py                 # Utilities (seed, collate, mkdir)
-│   ├── ACmix.py                 # ACmix attention-conv protein encoder
-│   ├── Intention.py             # BiIntention cross-modal fusion module
-│   ├── extract_unique_features.py     # Offline protein PLM feature extraction
-│   └── extract_unique_vit_features.py # Offline molecule ViT feature extraction
-├── video/
-│   ├── 7.py                     # Step 1: Generate 3D conformers (RDKit → SDF)
-│   └── 8.py                     # Step 2: Render molecular video frames (PyMOL → PNG)
-├── cross/
-│   ├── bind/                    # Cross-dataset experiment: BindingDB
-│   │   ├── code/                # Same structure as code/
-│   │   ├── data/                # df_train_cleaned.csv, df_test_cleaned.csv
-│   │   └── video/               # 7.py, 8.py for BindingDB molecules
-│   └── PDB/                     # Cross-dataset experiment: PDBbind (regression)
-│       ├── code/
-│       ├── data/
-│       └── video/
-├── requirements.txt
-├── .gitignore
-└── README.md
-```
-
----
 
 ## Large Files (hosted on Zenodo)
 
-The following directories contain large pretrained model weights and datasets that are **not included in this repository**. Please download them from Zenodo and place them at the paths shown below:
+This repository does not include large pretrained model weights and datasets.
+Please download them manually and place them into the corresponding directories as follows:
 
-| Directory | Contents | Notes |
-|-----------|----------|-------|
-| `molformer/` | IBM MolFormer pretrained weights | SMILES tokenizer + encoder |
-| `prot_t5_xl_uniref50/` | ProtT5-XL-UniRef50 model weights | Default protein language model https://huggingface.co/Rostlab/prot_t5_xl_uniref50/tree/main | 
-| `vit_model/` | ViT pretrained weights | Used for molecular frame feature extraction |
-| `data/` | DTI dataset files  | Primary dataset |
+1️⃣ From Zenodo
 
-> **Zenodo DOI:** `[TODO: https://zenodo.org/records/19641106]`
+Download all required files from:
+👉 https://zenodo.org/records/19641106
 
+After downloading, place the files into:
+
+molformer/ → IBM MolFormer pretrained weights
+vit_model/ → ViT pretrained weights for molecular frame feature extraction
+data/ → DTI dataset files
+2️⃣ Protein Language Model (ProtT5)
+
+Download ProtT5-XL-UniRef50 from Hugging Face:
+
+👉 https://huggingface.co/Rostlab/prot_t5_xl_uniref50/tree/main
+
+Place the downloaded files into:
+
+prot_t5_xl_uniref50/ → ProtT5-XL-UniRef50 pretrained model weights
+📌 Notes
+Make sure directory names match exactly as above.
+These models are required for running inference and training.
 
 ---
 
 ## Installation
 
-```bash
-# 1. Create conda environment (Python 3.8+)
-conda create -n mvr python=3.8
-conda activate mvr
-
-# 2. Install PyTorch (adjust CUDA version as needed)
-pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118
-
-# 3. Install DGL (adjust CUDA version as needed)
-pip install dgl -f https://data.dgl.ai/wheels/cu118/repo.html
-
-# 4. Install remaining dependencies
-pip install -r requirements.txt
-
-# 5. Install PyMOL (for molecular video rendering)
-# Option A: via conda
-conda install -c conda-forge pymol-open-source
-# Option B: commercial PyMOL — follow https://pymol.org/
-```
+Install dependencies (all required packages are specified in requirements.txt)
+requirements.txt
 
 ---
 
@@ -163,14 +120,3 @@ python main.py
 ---
 
 
-
-## Requirements
-
-See `requirements.txt`. Core dependencies:
-
-- Python ≥ 3.8
-- PyTorch ≥ 1.12
-- DGL + dgllife
-- HuggingFace Transformers
-- RDKit
-- PyMOL (for video generation only)
